@@ -1,15 +1,13 @@
 package com.example.securityapp.springsecurityjdbc01.config;
 
+import com.example.securityapp.springsecurityjdbc01.security.JpaUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class ProjectConfig extends WebSecurityConfigurerAdapter {
@@ -18,11 +16,16 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
+    /*@Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
         return manager;
+    }*/
+
+    @Bean
+    public UserDetailsService userDetailsManager(){
+        return new JpaUserDetailsService();
     }
 
     @Override
